@@ -7,14 +7,13 @@ from langchain_core.prompts import PromptTemplate
 from langchain_community.document_loaders import WebBaseLoader
 
 load_dotenv()
-
-
 st.set_page_config(
-    page_title="SmartApply 📧",
+    page_title="SmartApply",
     page_icon="📧",
     layout="centered",
     initial_sidebar_state="expanded",
 )
+# Custom CSS styling with background color animation
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -171,14 +170,17 @@ st.sidebar.markdown("""
 - Be patient while the AI processes your request.
 """)
 
+# Main app layout with styled container
 st.markdown('<div class="main-header">', unsafe_allow_html=True)
 st.title("📧 Job Application Email Generator")
 st.markdown("</div>", unsafe_allow_html=True)
 
+# Inputs: job link and resume upload
 job_link = st.text_input("🔗 Enter Job Link:")
 uploaded_file = st.file_uploader("📄 Upload Resume (PDF)", type=["pdf"])
 
 
+# Function to scrape job website
 def scrape_website(job_link):
     if not job_link:
         return "Please provide a valid job link."
@@ -211,6 +213,7 @@ def scrape_website(job_link):
     return res.content
 
 
+# Function to extract text from the resume PDF
 def extract_text(uploaded_file):
     if uploaded_file is not None:
         reader = pdf.PdfReader(uploaded_file)
@@ -223,6 +226,7 @@ def extract_text(uploaded_file):
     return "No resume uploaded."
 
 
+# Function to generate job application email
 def generate_mail(resume_content, job_content):
     if not resume_content or not job_content:
         return "Resume or job content is missing."
@@ -260,6 +264,7 @@ def generate_mail(resume_content, job_content):
     return final_mail.content
 
 
+# Main logic to generate the job application email
 if st.button("✨ Generate Job Application Email"):
     if uploaded_file and job_link:
         with st.spinner("🔄 Processing your request..."):
