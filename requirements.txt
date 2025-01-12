@@ -4,3 +4,5 @@ langchain-groq
 PyPDF2
 langchain-core
 langchain-community
+beautifulsoup4
+requests
